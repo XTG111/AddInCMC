@@ -81,6 +81,17 @@ void AAddInCMCCharacter::SetupPlayerInputComponent(class UInputComponent* Player
 	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &AAddInCMCCharacter::OnResetVR);
 }
 
+FCollisionQueryParams AAddInCMCCharacter::GetIgnoreCharacterParams() const
+{
+	FCollisionQueryParams Params;
+	TArray<AActor*> CharacterChildren;
+	GetAllChildActors(CharacterChildren);
+	Params.AddIgnoredActors(CharacterChildren);
+	Params.AddIgnoredActor(this);
+
+	return Params;
+}
+
 
 void AAddInCMCCharacter::OnResetVR()
 {
